@@ -1,5 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        SlangDictionary dictionary = new SlangDictionary();
+        dictionary.loadSlangDictionary("slang.txt");    
     }
 }
