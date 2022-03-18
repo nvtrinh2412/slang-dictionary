@@ -22,7 +22,6 @@ public class SlangDictionary {
       while (fileScanner.hasNextLine()) {
         String line = fileScanner.nextLine();
         String[] words = line.split("`");
-        System.out.println(line);
         if (words.length == 2) {
           String key = words[0];
           String[] values = words[1].split("\\| ");
@@ -30,14 +29,12 @@ public class SlangDictionary {
             List<String> valueList = dictionary.get(key);
             for (String value : values) {
               valueList.add(value);
-              valueList.add(value);
             }
             dictionary.put(key, valueList);
 
           } else {
             List<String> valueList = new ArrayList<>();
             for (String value : values) {
-              valueList.add(value);
               valueList.add(value);
             }
             dictionary.put(key, valueList);
@@ -49,6 +46,18 @@ public class SlangDictionary {
     }
   }
 
+  public void findSlang(){
+    System.out.println("Enter a word to search for: ");
+    String word = input.nextLine();
+    if (dictionary.containsKey(word)) {
+      List<String> values = dictionary.get(word);
+      for (String value : values) {
+        System.out.println(value);
+      }
+    } else {
+      System.out.println("No slang found");
+    }
+  }
   public void addWord(String word, String meaning) {
     if (dictionary.containsKey(word)) {
       dictionary.get(word).add(meaning);
@@ -67,4 +76,5 @@ public class SlangDictionary {
     System.out.print("\033[H\033[2J");
     System.out.flush();
   }
+
 }
