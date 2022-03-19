@@ -145,4 +145,7 @@ public class SlangDictionary {
     }
     return match.appendTail(strbf).toString();
   }
+  public void finalize() throws Throwable{
+    input.close();
+    }
 }
