@@ -5,10 +5,10 @@
 
 ### Danh sách các chức năng
 
-1. Chức năng tìm kiếm theo slang word
-1. Chức năng tìm kiếm theo definition, hiển thị ra tất cả các slang words mà trong defintion có chứa keyword gõ vào. 
-1.  Chức năng hiển thị history, danh sách các slang word đã tìm kiếm. 
-1.  Chức năng add 1 slang words mới. 
+1. Chức năng tìm kiếm theo slang word (done)
+1. Chức năng tìm kiếm theo definition, hiển thị ra tất cả các slang words mà trong defintion có chứa keyword gõ vào.(done) 
+1.  Chức năng hiển thị history, danh sách các slang word đã tìm kiếm.(done)
+1.  Chức năng add 1 slang words mới. (done)
 1.  Chức năng edit 1 slang word. 
 1.  Chức năng delete 1 slang word. Confirm trước khi xoá. 
 1.  Chức năng reset danh sách slang words gốc. 

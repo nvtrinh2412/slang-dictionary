@@ -52,6 +52,7 @@ public class SlangDictionary {
     System.out.println("Enter a word to search for: ");
     String word = input.nextLine();
     if (dictionary.containsKey(word)) {
+      historySearched.add(word);
       List<String> values = dictionary.get(word);
       for (String value : values) {
         System.out.println(value);
@@ -76,62 +77,59 @@ public class SlangDictionary {
     }
     if (isContained == false) {
       System.out.println("No Slang found");
+      return;
     }
+    historySearched.add(definition);
   }
 
-  public void findByHistory() {
-    System.out.println("Enter a word to search for: ");
+  public void displayHistorySearch() {
+    System.out.println("History search: ");
+    if (historySearched.size() == 0) {
+      System.out.println("No history found");
+    } else {
+      for (String word : historySearched) {
+        System.out.println(word);
+      }
+    }
+  }
+  
+
+  public void addWord() {
+    System.out.println("Enter a Slang word to add: (ex: SOS) ");
     String word = input.nextLine();
-    if (historySearched.contains(word)) {
-      List<String> values = dictionary.get(word);
-      for (String value : values) {
-        System.out.println(value);
-      }
-    } else {
-      System.out.println("No slang found");
-    }
-  }
-
-  public void findByHistoryAndDefinition() {
-    System.out.println("Enter a definition to search for: ");
-    String definition = input.nextLine();
-    if (historySearched.contains(definition)) {
-      for (String key : dictionary.keySet()) {
-        List<String> values = dictionary.get(key);
-        if (values.contains(definition)) {
-          System.out.println(key);
-        }
-      }
-    } else {
-      System.out.println("No slang found");
-    }
-  }
-
-  public void findByHistoryAndWord() {
-    System.out.println("Enter a word to search for: ");
-    String word = input.nextLine();
-    if (historySearched.contains(word)) {
-      List<String> values = dictionary.get(word);
-      for (String value : values) {
-        System.out.println(value);
-      }
-    } else {
-      System.out.println("No slang found");
-    }
-  }
-
-  public void addWord(String word, String meaning) {
+    System.out.println("Enter a definition to add: (ex: 'Help me!') ");
+    String definition = capitalizeInput(input.nextLine());
     if (dictionary.containsKey(word)) {
-      dictionary.get(word).add(meaning);
+      dictionary.get(word).add(definition);
     } else {
       List<String> meanings = new ArrayList<>();
-      meanings.add(meaning);
+      meanings.add(definition);
       dictionary.put(word, meanings);
     }
+    System.out.println("Word added "+ word + ":"+ definition);
   }
 
-  public List<String> get(String word) {
-    return dictionary.get(word);
+  public void showDictionary() {
+    for (String key : dictionary.keySet()) {
+      System.out.println(key + ": " );
+      List<String> values = dictionary.get(key);
+      for (String value : values) {
+        System.out.println("\t" + value);
+      }
+      System.out.println("\n==========================================");
+    }
+  }
+  public void editSlangWord(){
+    System.out.println("Enter a Slang word to edit: (ex: SOS) ");
+    String word = input.nextLine();
+    if (dictionary.containsKey(word)) {
+      System.out.println("Enter a definition to edit: (ex: 'Help me!') ");
+      String definition = capitalizeInput(input.nextLine());
+      dictionary.get(word).add(definition);
+      System.out.println("Word edited "+ word + ":"+ definition);
+    } else {
+      System.out.println("No slang found");
+    }
   }
 
   public final static void clearScreen() {
