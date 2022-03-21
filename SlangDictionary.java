@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -82,6 +83,21 @@ public class SlangDictionary {
     historySearched.add(definition);
   }
 
+  public HashMap<String, List<String>> randomSlangFromDictionary(int numberOfSlang) {
+    HashMap<String, List<String>> randomSlang = new HashMap<>();
+    int randomIndex = 0;
+    for (int i = 0; i < numberOfSlang; i++) {
+      do{
+        randomIndex = new Random().nextInt(dictionary.size());
+      }
+      while (randomSlang.containsKey(dictionary.keySet().toArray()[randomIndex]));
+      String key = (String) dictionary.keySet().toArray()[randomIndex];
+      List<String> values = dictionary.get(key);
+      randomSlang.put(key, values);
+    }
+    return randomSlang;
+  }
+
   public void displayHistorySearch() {
     System.out.println("History search: ");
     if (historySearched.size() == 0) {
@@ -92,7 +108,6 @@ public class SlangDictionary {
       }
     }
   }
-  
 
   public void addWord() {
     System.out.println("Enter a Slang word to add: (ex: SOS) ");
@@ -106,12 +121,12 @@ public class SlangDictionary {
       meanings.add(definition);
       dictionary.put(word, meanings);
     }
-    System.out.println("Word added "+ word + ":"+ definition);
+    System.out.println("Word added " + word + ":" + definition);
   }
 
   public void showDictionary() {
     for (String key : dictionary.keySet()) {
-      System.out.println(key + ": " );
+      System.out.println(key + ": ");
       List<String> values = dictionary.get(key);
       for (String value : values) {
         System.out.println("\t" + value);
@@ -119,14 +134,15 @@ public class SlangDictionary {
       System.out.println("\n==========================================");
     }
   }
-  public void editSlangWord(){
+
+  public void editSlangWord() {
     System.out.println("Enter a Slang word to edit: (ex: SOS) ");
     String word = input.nextLine();
     if (dictionary.containsKey(word)) {
       System.out.println("Enter a definition to edit: (ex: 'Help me!') ");
       String definition = capitalizeInput(input.nextLine());
       dictionary.get(word).add(definition);
-      System.out.println("Word edited "+ word + ":"+ definition);
+      System.out.println("Word edited " + word + ":" + definition);
     } else {
       System.out.println("No slang found");
     }
@@ -145,7 +161,8 @@ public class SlangDictionary {
     }
     return match.appendTail(strbf).toString();
   }
-  public void finalize() throws Throwable{
+
+  public void finalize() throws Throwable {
     input.close();
-    }
+  }
 }
