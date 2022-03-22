@@ -44,6 +44,7 @@ public class SlangDictionary {
           }
         }
       }
+      
     } catch (Exception e) {
       System.out.println("Error: " + e.getMessage());
     }
@@ -216,7 +217,9 @@ public class SlangDictionary {
       System.out.println("No slang found");
     }
   }
-
+  public void resetDictionary(String backupFile) {
+    loadSlangDictionary(backupFile);
+  }
   public void finalize() throws Throwable {
     input.close();
   }
