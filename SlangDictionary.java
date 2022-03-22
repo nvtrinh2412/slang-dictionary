@@ -66,11 +66,12 @@ public class SlangDictionary {
   public void findByDefinition() {
     boolean isContained = false;
     System.out.println("Enter a definition to search for: ");
-    String definition = capitalizeInput(input.nextLine());
+    String definition = input.nextLine();
+    String capitalizedDefinition = capitalizeInput(definition);
     for (String key : dictionary.keySet()) {
       List<String> values = dictionary.get(key);
       for (String value : values) {
-        if (value.contains(definition)) {
+        if (value.contains(definition) || value.contains(capitalizedDefinition) ) {
           System.out.println("\t" + key);
           isContained = true;
         }
@@ -87,14 +88,14 @@ public class SlangDictionary {
     HashMap<String, List<String>> randomSlang = new HashMap<>();
     int randomIndex = 0;
     for (int i = 0; i < numberOfSlang; i++) {
-      do{
+      do {
         randomIndex = new Random().nextInt(dictionary.size());
-      }
-      while (randomSlang.containsKey(dictionary.keySet().toArray()[randomIndex]));
+      } while (randomSlang.containsKey(dictionary.keySet().toArray()[randomIndex]));
       String key = (String) dictionary.keySet().toArray()[randomIndex];
       List<String> values = dictionary.get(key);
       randomSlang.put(key, values);
     }
+    testDisplay(randomSlang);
     return randomSlang;
   }
 
@@ -139,9 +140,20 @@ public class SlangDictionary {
     System.out.println("Enter a Slang word to edit: (ex: SOS) ");
     String word = input.nextLine();
     if (dictionary.containsKey(word)) {
-      System.out.println("Enter a definition to edit: (ex: 'Help me!') ");
-      String definition = capitalizeInput(input.nextLine());
-      dictionary.get(word).add(definition);
+      List<String> meanings = dictionary.get(word); // get all meanings of slang
+      displaySlangWord(word); // display all meaning of the word
+      int index;
+      // Chose option
+      do {
+        System.out.println("Enter a definition option to edit: (ex: 1,2,3,...) ");
+        index = input.nextInt() -1 ;
+      } while (index < 0 || index >= meanings.size());
+
+      System.out.println("Enter a replacement's definition: (ex: 'Help me!') ");
+      input.nextLine();
+      String definition = input.nextLine();
+      meanings.set(index, capitalizeInput(definition));
+      meanings.get(index);
       System.out.println("Word edited " + word + ":" + definition);
     } else {
       System.out.println("No slang found");
@@ -154,12 +166,37 @@ public class SlangDictionary {
   }
 
   public String capitalizeInput(String input) {
+    input.toLowerCase();
     StringBuffer strbf = new StringBuffer();
     Matcher match = Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(input);
     while (match.find()) {
       match.appendReplacement(strbf, match.group(1).toUpperCase() + match.group(2).toLowerCase());
     }
     return match.appendTail(strbf).toString();
+  }
+
+  public void testDisplay(HashMap<String, List<String>> dictionary) {
+    for (String key : dictionary.keySet()) {
+      System.out.println(key + ": ");
+      List<String> values = dictionary.get(key);
+      for (String value : values) {
+        System.out.println("\t" + value);
+      }
+      System.out.println("\n==========================================");
+    }
+  }
+
+  public void displaySlangWord(String key) {
+    List<String> values = dictionary.get(key);
+    int length = values.size();
+    if (length >= 2) {
+      System.out.println(key + ": ");
+      for (int i = 0; i < length; i++) {
+        System.out.println("\t " + (i + 1) + ". " + values.get(i));
+      }
+    } else {
+      System.out.println(key + ": " + "\t " + values.get(0));
+    }
   }
 
   public void finalize() throws Throwable {
