@@ -7,8 +7,12 @@ public class Main {
         // dictionary.displaySlangWord("SOS");
         // dictionary.editSlangWord();
         // dictionary.findBySlang();
-        dictionary.findByDefinition();
+        // dictionary.findByDefinition();
+
         // dictionary.displayHistorySearch();
         // dictionary.addWord();
+        dictionary.deleteSlangWords();
+        dictionary.findBySlang();
+
     }
 }

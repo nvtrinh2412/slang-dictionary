@@ -50,8 +50,8 @@ public class SlangDictionary {
   }
 
   public void findBySlang() {
-    System.out.println("Enter a word to search for: ");
-    String word = input.nextLine();
+    System.out.println("Enter a Slang word to search: (ex: SOS, $ ,..) ");
+    String word = (input.nextLine()).toUpperCase();
     if (dictionary.containsKey(word)) {
       historySearched.add(word);
       List<String> values = dictionary.get(word);
@@ -71,7 +71,7 @@ public class SlangDictionary {
     for (String key : dictionary.keySet()) {
       List<String> values = dictionary.get(key);
       for (String value : values) {
-        if (value.contains(definition) || value.contains(capitalizedDefinition) ) {
+        if (value.contains(definition) || value.contains(capitalizedDefinition)) {
           System.out.println("\t" + key);
           isContained = true;
         }
@@ -146,7 +146,7 @@ public class SlangDictionary {
       // Chose option
       do {
         System.out.println("Enter a definition option to edit: (ex: 1,2,3,...) ");
-        index = input.nextInt() -1 ;
+        index = input.nextInt() - 1;
       } while (index < 0 || index >= meanings.size());
 
       System.out.println("Enter a replacement's definition: (ex: 'Help me!') ");
@@ -196,6 +196,24 @@ public class SlangDictionary {
       }
     } else {
       System.out.println(key + ": " + "\t " + values.get(0));
+    }
+  }
+
+  public void deleteSlangWords() {
+    System.out.println("Enter a Slang word to delete: (ex: SOS, $ ,..) ");
+    String key = input.nextLine().toUpperCase();
+    if (dictionary.containsKey(key)) {
+      displaySlangWord(key);
+      System.out.println("Do you want to delete " + key + "? (y/n)");
+      String answer = input.nextLine().toLowerCase();
+      if (answer.equals("y")) {
+        dictionary.remove(key);
+        System.out.println("Word deleted " + key);
+      } else {
+        System.out.println("Word not deleted");
+      }
+    } else {
+      System.out.println("No slang found");
     }
   }
 
