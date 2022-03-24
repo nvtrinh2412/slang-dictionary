@@ -252,7 +252,21 @@ public class SlangDictionary {
     int correctAnswerNumber = new Random().nextInt(NUMBER_OF_CHOICE); // random number from 0 to 3
     char correctAnswerKey = (char) (correctAnswerNumber + 65); // A,B,C,D
     String correctAnswerSlang = (String) randomSlang.keySet().toArray()[correctAnswerNumber];
-
+    String correctAnswerDefinition = randomSlang.get(correctAnswerSlang).get(0);
+    System.out.println("Choose correct slang of " + correctAnswerDefinition + " : ");
+    for(int i = 0; i < NUMBER_OF_CHOICE; i++){
+      String key = (String) randomSlang.keySet().toArray()[i];
+      String definition = randomSlang.get(key).get(0);
+      System.out.println((char) (i + 65) + ". " + key);
+    }
+    char chosenAnswer = input.nextLine().toUpperCase().charAt(0);
+    if(chosenAnswer == correctAnswerKey){
+      System.out.println("Correct answer!");
+  }
+    else{
+      System.out.println("Wrong answer!");
+      System.out.println("Correct answer is " + correctAnswerKey + ": " + correctAnswerSlang);
+    }
   }
 
   public void finalize() throws Throwable {
