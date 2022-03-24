@@ -9,12 +9,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SlangDictionary {
+  private final int NUMBER_OF_CHOICE = 4;
   private HashMap<String, List<String>> dictionary;
+  private HashMap<String, List<String>> dictionaryBackup;
   private List<String> historySearched;
   private Scanner input;
 
   SlangDictionary() {
     dictionary = new HashMap<String, List<String>>();
+    dictionaryBackup = new HashMap<String, List<String>>();
+    dictionaryBackup.putAll(dictionary);
     historySearched = new ArrayList<>();
     input = new Scanner(System.in);
   }
@@ -44,7 +48,7 @@ public class SlangDictionary {
           }
         }
       }
-      
+
     } catch (Exception e) {
       System.out.println("Error: " + e.getMessage());
     }
@@ -96,7 +100,6 @@ public class SlangDictionary {
       List<String> values = dictionary.get(key);
       randomSlang.put(key, values);
     }
-    testDisplay(randomSlang);
     return randomSlang;
   }
 
@@ -217,9 +220,41 @@ public class SlangDictionary {
       System.out.println("No slang found");
     }
   }
-  public void resetDictionary(String backupFile) {
-    loadSlangDictionary(backupFile);
+
+  public void resetDictionary() {
+    dictionary.putAll(dictionaryBackup);
   }
+
+  public void gameFindCorrectDefination() {
+    HashMap<String, List<String>> randomSlang = randomSlangFromDictionary(NUMBER_OF_CHOICE);
+    int correctAnswerNumber = new Random().nextInt(NUMBER_OF_CHOICE);
+    char correctAnswer = (char) (correctAnswerNumber + 65);
+    String correctAnswerSlang = (String) randomSlang.keySet().toArray()[correctAnswerNumber];
+
+    System.out.println("Choose correct definition of " + correctAnswerSlang + " : ");
+    for (int i = 0; i < NUMBER_OF_CHOICE; i++) {
+      String key = (String) randomSlang.keySet().toArray()[i];
+      String definition = randomSlang.get(key).get(0);
+      System.out.println((char) (i + 65) + ". " + definition);
+    }
+
+    String chosenAnswer = input.nextLine().toUpperCase();
+    if (chosenAnswer.charAt(0) == correctAnswer) {
+      System.out.println("Correct answer!");
+    } else {
+      System.out.println("Wrong answer!");
+      System.out.println("Correct answer is " + correctAnswer + ": " + randomSlang.get(correctAnswerSlang).get(0));
+    }
+  }
+
+  public void gameFindCorrectSlang(){
+    HashMap<String, List<String>> randomSlang = randomSlangFromDictionary(NUMBER_OF_CHOICE);
+    int correctAnswerNumber = new Random().nextInt(NUMBER_OF_CHOICE); // random number from 0 to 3
+    char correctAnswerKey = (char) (correctAnswerNumber + 65); // A,B,C,D
+    String correctAnswerSlang = (String) randomSlang.keySet().toArray()[correctAnswerNumber];
+
+  }
+
   public void finalize() throws Throwable {
     input.close();
   }

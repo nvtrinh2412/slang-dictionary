@@ -14,8 +14,8 @@ public class Main {
 
         // dictionary.displayHistorySearch();
         // dictionary.addWord();
-        dictionary.deleteSlangWords();
-        dictionary.findBySlang();
+        // dictionary.deleteSlangWords();
+        dictionary.gameFindCorrectSlang();
 
     }
 }
