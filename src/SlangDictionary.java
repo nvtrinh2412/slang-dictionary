@@ -1,4 +1,8 @@
+package src;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,7 +22,6 @@ public class SlangDictionary {
   SlangDictionary() {
     dictionary = new HashMap<String, List<String>>();
     dictionaryBackup = new HashMap<String, List<String>>();
-    dictionaryBackup.putAll(dictionary);
     historySearched = new ArrayList<>();
     input = new Scanner(System.in);
   }
@@ -48,6 +51,7 @@ public class SlangDictionary {
           }
         }
       }
+      dictionaryBackup.putAll(dictionary);
 
     } catch (Exception e) {
       System.out.println("Error: " + e.getMessage());
@@ -222,7 +226,9 @@ public class SlangDictionary {
   }
 
   public void resetDictionary() {
+    dictionary.clear();
     dictionary.putAll(dictionaryBackup);
+    System.out.println("Dictionary reset");
   }
 
   public void gameFindCorrectDefination() {
@@ -256,7 +262,6 @@ public class SlangDictionary {
     System.out.println("Choose correct slang of " + correctAnswerDefinition + " : ");
     for(int i = 0; i < NUMBER_OF_CHOICE; i++){
       String key = (String) randomSlang.keySet().toArray()[i];
-      String definition = randomSlang.get(key).get(0);
       System.out.println((char) (i + 65) + ". " + key);
     }
     char chosenAnswer = input.nextLine().toUpperCase().charAt(0);
@@ -266,6 +271,20 @@ public class SlangDictionary {
     else{
       System.out.println("Wrong answer!");
       System.out.println("Correct answer is " + correctAnswerKey + ": " + correctAnswerSlang);
+    }
+  }
+
+  public void saveDataSlang(String destinationFile){
+    try {
+      FileOutputStream fileOut = new FileOutputStream(destinationFile);
+      ObjectOutputStream out = new ObjectOutputStream(fileOut);
+      out.writeObject(dictionary);
+      out.close();
+      fileOut.close();
+      System.out.println("Serialized data is saved in " + destinationFile);
+    } catch (IOException i) {
+      i.printStackTrace();
+      System.out.println("Error while saving data, please try again");
     }
   }
 
