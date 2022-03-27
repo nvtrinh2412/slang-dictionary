@@ -60,7 +60,8 @@ public class SlangDictionary {
 
   public void findBySlang() {
     System.out.println("Enter a Slang word to search: (ex: SOS, $ ,..) ");
-    String word = (input.nextLine()).toUpperCase();
+    String inputWord = input.nextLine();
+    String word = inputWord.toUpperCase();
     if (dictionary.containsKey(word)) {
       historySearched.add(word);
       List<String> values = dictionary.get(word);
@@ -70,6 +71,7 @@ public class SlangDictionary {
     } else {
       System.out.println("No slang found");
     }
+    historySearched.add(inputWord);
   }
 
   public void findByDefinition() {
@@ -168,7 +170,7 @@ public class SlangDictionary {
     }
   }
 
-  public final static void clearScreen() {
+  public final void clearScreen() {
     System.out.print("\033[H\033[2J");
     System.out.flush();
   }
