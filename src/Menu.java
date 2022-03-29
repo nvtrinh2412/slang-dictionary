@@ -36,7 +36,6 @@ public class Menu {
   public static void handleMenuSelection(SlangDictionary slangDictionary, int option) {
     switch (option) {
       case 0:
-        System.out.println("Please enter a valid option");
         break;
       case 1:
         slangDictionary.findBySlang();

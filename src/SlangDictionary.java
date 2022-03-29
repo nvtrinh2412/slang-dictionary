@@ -1,7 +1,9 @@
 package src;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,7 +65,6 @@ public class SlangDictionary {
     String inputWord = input.nextLine();
     String word = inputWord.toUpperCase();
     if (dictionary.containsKey(word)) {
-      historySearched.add(word);
       List<String> values = dictionary.get(word);
       for (String value : values) {
         System.out.println(value);
@@ -278,6 +279,7 @@ public class SlangDictionary {
 
   public void saveDataSlang(String destinationFile){
     try {
+      // store to file txt
       FileOutputStream fileOut = new FileOutputStream(destinationFile);
       ObjectOutputStream out = new ObjectOutputStream(fileOut);
       out.writeObject(dictionary);
@@ -288,6 +290,15 @@ public class SlangDictionary {
       i.printStackTrace();
       System.out.println("Error while saving data, please try again");
     }
+  }
+
+  public void loadSlangDictionaryData(String destinationFile) throws IOException, ClassNotFoundException {
+    FileInputStream fileIn = new FileInputStream(destinationFile);
+    ObjectInputStream in = new ObjectInputStream(fileIn);
+    dictionary = (HashMap<String, List<String>>) in.readObject();
+    in.close();
+    fileIn.close();
+    System.out.println("Data loaded from " + destinationFile);
   }
 
   public void finalize() throws Throwable {
