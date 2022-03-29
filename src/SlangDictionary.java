@@ -15,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SlangDictionary {
+  final static private String SLANG_FILE_PATH = "./Data/slang.txt";
   private final int NUMBER_OF_CHOICE = 4;
   private HashMap<String, List<String>> dictionary;
   private HashMap<String, List<String>> dictionaryBackup;
@@ -186,14 +187,13 @@ public class SlangDictionary {
     return match.appendTail(strbf).toString();
   }
 
-  public void testDisplay(HashMap<String, List<String>> dictionary) {
+  public static void showDictionary(HashMap<String, List<String>> dictionary) {
     for (String key : dictionary.keySet()) {
       System.out.println(key + ": ");
       List<String> values = dictionary.get(key);
       for (String value : values) {
         System.out.println("\t" + value);
       }
-      System.out.println("\n==========================================");
     }
   }
 
@@ -228,9 +228,9 @@ public class SlangDictionary {
     }
   }
 
-  public void resetDictionary() {
+  public void resetDictionary() throws ClassNotFoundException, IOException {
     dictionary.clear();
-    dictionary.putAll(dictionaryBackup);
+    loadSlangDictionaryData(SLANG_FILE_PATH);
     System.out.println("Dictionary reset");
   }
 
@@ -298,7 +298,6 @@ public class SlangDictionary {
     dictionary = (HashMap<String, List<String>>) in.readObject();
     in.close();
     fileIn.close();
-    System.out.println("Data loaded from " + destinationFile);
   }
 
   public void finalize() throws Throwable {

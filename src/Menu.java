@@ -1,5 +1,6 @@
 package src;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Menu {
@@ -33,7 +34,7 @@ public class Menu {
     return option;
   }
 
-  public static void handleMenuSelection(SlangDictionary slangDictionary, int option) {
+  public static void handleMenuSelection(SlangDictionary slangDictionary, int option) throws ClassNotFoundException, IOException {
     switch (option) {
       case 0:
         break;
@@ -59,7 +60,7 @@ public class Menu {
         slangDictionary.resetDictionary();
         break;
       case 8:
-        slangDictionary.randomSlangFromDictionary(1);
+        SlangDictionary.showDictionary(slangDictionary.randomSlangFromDictionary(1)); 
         break;
       case 9:
         slangDictionary.gameFindCorrectDefination();
